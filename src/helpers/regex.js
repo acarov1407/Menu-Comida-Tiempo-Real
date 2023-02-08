@@ -1,0 +1,1 @@
+export const nameRegex = new RegExp('^[a-zA-Z]([a-zA-Z]{2,}\\s*){1,3}$')
