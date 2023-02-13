@@ -2,6 +2,7 @@ import Head from "next/head"
 
 import Sidebar from "@/components/Sidebar"
 import ModalProduct from "@/components/ModalProduct"
+import ModalWaiting from "@/components/ModalWaiting"
 import ToastProduct from "@/components/ToastProduct"
 import Steps from "@/components/Steps"
 
@@ -26,6 +27,7 @@ function Layout({ children, page }) {
         </main>
       </div>
       <ModalProduct />
+      <ModalWaiting />
       <ToastProduct />
 
     </>

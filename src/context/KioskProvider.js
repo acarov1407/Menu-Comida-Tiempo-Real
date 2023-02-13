@@ -9,14 +9,23 @@ function KioskProvider({ children }) {
 
     const [categories, setCategories] = useState([]);
     const [currentCategory, setCurrentCategory] = useState({});
+    const [isLoadingCurrentCategory, setIsLoadingCurrentCategory] = useState(true);
+
     const [product, setProduct] = useState({});
     const [modal, setModal] = useState(false);
+    const [waitingModal, setWaitingModal] = useState(false);
     const [order, setOrder] = useState([]);
     const [total, setTotal] = useState(0);
 
     const [clientName, setClientName] = useState('');
 
     const router = useRouter();
+
+    useEffect(() => {
+        if (currentCategory) setIsLoadingCurrentCategory(false);
+        else setIsLoadingCurrentCategory(true);
+
+    }, [currentCategory]);
 
     useEffect(() => {
         getCategories();
@@ -48,6 +57,7 @@ function KioskProvider({ children }) {
     const handleChangeModal = () => {
         setModal(!modal);
     }
+
 
     const handleAddOrder = ({ categoryId, ...product }) => {
         const isInOrder = order.some(_product => _product.id === product.id);
@@ -92,12 +102,13 @@ function KioskProvider({ children }) {
 
         setTimeout(() => {
             router.push("/");
-        }, 1000)
+        }, 2500)
 
     }
 
     const saveOrderInDB = async () => {
         try {
+            setWaitingModal(true);
             await axios.post('/api/orders',
                 {
                     orderedBy: clientName,
@@ -109,6 +120,8 @@ function KioskProvider({ children }) {
             resetApp();
         } catch (error) {
             console.log(error);
+        }finally{
+            setWaitingModal(false);
         }
     }
 
@@ -120,11 +133,13 @@ function KioskProvider({ children }) {
             value={{
                 categories,
                 currentCategory,
+                isLoadingCurrentCategory,
                 handleClickCategory,
                 product,
                 handleClickProduct,
                 modal,
                 handleChangeModal,
+                waitingModal,
                 handleAddOrder,
                 order,
                 handleEditProduct,
@@ -132,7 +147,7 @@ function KioskProvider({ children }) {
                 clientName,
                 setClientName,
                 saveOrderInDB,
-                total
+                total,
             }}
         >
             {children}

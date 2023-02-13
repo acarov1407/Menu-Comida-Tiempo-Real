@@ -10,13 +10,13 @@ import { formatMoney } from "@/helpers";
 function Total() {
 
     const { order, clientName, setClientName, total, saveOrderInDB } = useKiosk();
-    
+
     const [errorMsg, setErrorMsg] = useState('');
     const [isValidOrder, setIsValidOrder] = useState(false);
 
-    
+
     const handleOrderValidation = () => {
-        const {isValid, errorMsg} = validateOrder(order, clientName);
+        const { isValid, errorMsg } = validateOrder(order, clientName);
 
         setIsValidOrder(isValid);
         setErrorMsg(errorMsg);
@@ -28,7 +28,7 @@ function Total() {
         handleOrderValidation();
     }, [order, clientName]);
 
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -79,6 +79,7 @@ function Total() {
                         disabled={!isValidOrder}
                     />
                 </div>
+
             </form>
         </Layout>
     )

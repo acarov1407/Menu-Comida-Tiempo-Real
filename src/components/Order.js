@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import { formatMoney } from "@/helpers";
 import axios from "axios";
@@ -6,13 +7,17 @@ import {toast} from "react-toastify";
 function Order({ _order }) {
 
     const { id, orderedBy, state, total, order } = _order;
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const completeOrder = async () => {
         try{
+            setIsDisabled(true);
             const data = await axios.post(`/api/orders/${id}`);
             toast.success('Orden Lista');
         }catch(error){
             toast.error('Hubo un error');
+        } finally {
+            setIsDisabled(false);
         }
     }
 
@@ -51,9 +56,10 @@ function Order({ _order }) {
                 <p className="mt-5 font-black text-4xl text-amber-500">Total a pagar: {formatMoney(total)}</p>
 
                 <button
-                className="bg-indigo-600 hover:bg-indigo-800 text-white mt-5 md:mt-0 py-3 px-10 uppercase 
-                font-bold rounded-lg"
+                className={`text-white mt-5 md:mt-0 py-3 px-10 uppercase font-bold rounded-lg
+                ${!isDisabled ? 'bg-indigo-600 hover:bg-indigo-800' : 'bg-indigo-100'}`}
                 type="button"
+                disabled={isDisabled}
                 onClick={() => completeOrder()}
                 >
                     Completar Orden
