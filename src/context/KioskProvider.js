@@ -29,8 +29,13 @@ function KioskProvider({ children }) {
 
     useEffect(() => {
         const getCategories = async () => {
-            const { data } = await axios("api/categories");
-            setCategories(data);
+            try{
+                const { data } = await axios("api/categories");
+                setCategories(data);
+            }catch(error){
+                console.log(error)
+            }
+            
         }
         
         getCategories();
