@@ -8,10 +8,12 @@ function Sidebar() {
   return (
     <aside className="lg:w-4/12 xl:w-1/4 2xl:w-1/5">
         <Image 
-        className="mx-auto"
+        className="mx-auto w-52 h-auto"
         width={200} 
         height={100} 
-        src="/assets/img/logo.svg" alt="logo image"/>
+        src="/assets/img/logo.svg" alt="logo image"
+        priority
+        />
         <nav className="mt-12">
             {
               categories.map(_category => (

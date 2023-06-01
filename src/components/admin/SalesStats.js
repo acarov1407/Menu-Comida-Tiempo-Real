@@ -4,6 +4,7 @@ import { formatMoney } from "@/helpers";
 function SalesStats({completedOrders}) {
   
   const calculateTotalSold = () => {
+    
     const total = completedOrders?.reduce((total, order) => (order.total + total), 0);
     return total;
   }

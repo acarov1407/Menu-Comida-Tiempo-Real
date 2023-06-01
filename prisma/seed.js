@@ -1,10 +1,10 @@
-const  {categories} = require("./data/categories")
-const {products} = require("./data/products")
-const {PrismaClient} = require("@prisma/client")
+const { categories } = require("./data/categories")
+const { products } = require("./data/products")
+const { PrismaClient } = require("@prisma/client")
 
 const prisma = new PrismaClient();
 
-const main = async ()  => {
+const main = async () => {
     try {
         await prisma.category.createMany({
             data: categories
@@ -13,7 +13,7 @@ const main = async ()  => {
         await prisma.product.createMany({
             data: products
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }

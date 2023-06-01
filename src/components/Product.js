@@ -12,7 +12,9 @@ function Product({ product }) {
                 height={200}
                 width={300}
                 src={`/assets/img/${image}.jpg`}
-                alt={`Food Image ${name}`} />
+                alt={`Food Image ${name}`} 
+                loading="lazy"
+                />
 
             <div className="p-5">
                 <h3 className="text-2xl font-bold">{name}</h3>

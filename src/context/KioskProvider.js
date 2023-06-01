@@ -28,6 +28,11 @@ function KioskProvider({ children }) {
     }, [currentCategory]);
 
     useEffect(() => {
+        const getCategories = async () => {
+            const { data } = await axios("api/categories");
+            setCategories(data);
+        }
+        
         getCategories();
     }, []);
 
@@ -39,10 +44,7 @@ function KioskProvider({ children }) {
         calculateTotal();
     }, [order])
 
-    const getCategories = async () => {
-        const { data } = await axios("api/categories");
-        setCategories(data);
-    }
+
 
     const handleClickCategory = (id) => {
         router.push("/");
@@ -120,7 +122,7 @@ function KioskProvider({ children }) {
             resetApp();
         } catch (error) {
             console.log(error);
-        }finally{
+        } finally {
             setWaitingModal(false);
         }
     }

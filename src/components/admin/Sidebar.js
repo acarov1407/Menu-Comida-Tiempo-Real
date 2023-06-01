@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
 
@@ -12,11 +11,12 @@ function Sidebar() {
     return (
         <aside className="md:w-4/12 xl:w-1/4 2xl:w-1/5 py-5">
             <Image
-                className="mx-auto"
+                className="mx-auto h-auto w-52"
                 width={200}
                 height={100}
                 src="/assets/img/logo.svg"
                 alt="logo image"
+                priority
             />
 
             <nav className="mt-12">
@@ -29,6 +29,7 @@ function Sidebar() {
                     }}
                 >
                     <Image
+                    className="h-auto w-[65px]"
                         width={65}
                         height={65}
                         src="/assets/icon/clock.svg"
@@ -46,6 +47,7 @@ function Sidebar() {
                     }}
                 >
                     <Image
+                    className="h-auto w-[65px]"
                         width={65}
                         height={65}
                         src="/assets/icon/check.svg"
@@ -63,6 +65,7 @@ function Sidebar() {
                     }}
                 >
                     <Image
+                    className="h-auto w-[65px]"
                         width={65}
                         height={65}
                         src="/assets/icon/info_icon.svg"
