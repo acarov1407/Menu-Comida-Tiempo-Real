@@ -10,9 +10,9 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-        insertOrder(handlerInfo);
+        return insertOrder(handlerInfo);
     } else if(req.method === 'GET'){
-        getOrders(handlerInfo)
+        return getOrders(handlerInfo)
     }
 }
 
@@ -28,7 +28,7 @@ async function insertOrder(handlerInfo) {
             order
         }
     })
-    res.json(orderCreated);
+    return res.json(orderCreated);
 
 }
 
@@ -41,5 +41,7 @@ async function getOrders(handlerInfo){
         }
     });
 
-    res.status(200).json(orders);
+    console.log(orders)
+
+    return res.status(200).json(orders);
 }

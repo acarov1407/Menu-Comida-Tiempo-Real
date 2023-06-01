@@ -7,5 +7,5 @@ export default async function getCategories(req, res) {
             state: true
         }
     })
-    res.status(200).json(completedOrders);
+    return res.status(200).json(completedOrders);
 }
