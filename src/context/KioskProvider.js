@@ -44,8 +44,6 @@ function KioskProvider({ children }) {
         calculateTotal();
     }, [order])
 
-
-
     const handleClickCategory = (id) => {
         router.push("/");
         const category = categories.filter(_category => _category.id === id);
