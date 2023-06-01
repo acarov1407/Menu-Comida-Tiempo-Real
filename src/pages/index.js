@@ -9,9 +9,7 @@ export default function Home() {
   return (
     isLoadingCurrentCategory
       ?
-      (
         <Spinner />
-      )
       :
       (
         <Layout page={`Menú ${currentCategory?.name}`}>
