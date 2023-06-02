@@ -21,15 +21,17 @@ export async function getStaticProps() {
   } catch (error) {
     return {
       props: {
-        initialCategories: null
+        initialCategories: [],
+        error
       }
     }
   }
 }
 
-export default function Home({ initialCategories }) {
+export default function Home({ initialCategories, error }) {
   const { currentCategory, isLoadingCurrentCategory, setCategories } = useKiosk();
 
+  console.log(error)
   useEffect(() => {
     setCategories(initialCategories);
   }, [])
