@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "./_base";
 
 export default async function getCategories(req, res) {
-    const prisma = new PrismaClient();
+
     const completedOrders = await prisma.order.findMany({
         where: {
             state: true

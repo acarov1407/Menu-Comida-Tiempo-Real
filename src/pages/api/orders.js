@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "./_base";
 
 
 export default async function handler(req, res) {
-    const prisma = new PrismaClient();
     const handlerInfo = {
         req,
         res,
@@ -40,8 +39,6 @@ async function getOrders(handlerInfo){
             state : false
         }
     });
-
-    console.log(orders)
 
     return res.status(200).json(orders);
 }

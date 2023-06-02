@@ -1,5 +1,4 @@
 import Head from "next/head"
-
 import Sidebar from "@/components/Sidebar"
 import ModalProduct from "@/components/ModalProduct"
 import ModalWaiting from "@/components/ModalWaiting"
@@ -10,10 +9,11 @@ import Steps from "@/components/Steps"
 
 function Layout({ children, page }) {
 
+  const title = `Café - ${page}`;
   return (
     <>
       <Head>
-        <title>Café - {page}</title>
+        <title>{title}</title>
         <meta name="description" content="Quiosco Cafetería" />
       </Head>
 

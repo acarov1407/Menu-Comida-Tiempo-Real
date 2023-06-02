@@ -2,17 +2,14 @@ import Head from "next/head";
 import Sidebar from "@/components/admin/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 
 export default function AdminLayout({ children, page }) {
 
-  const router = useRouter();
-
-
+  const title = `Café - ${page}`;
   return (
     <>
       <Head>
-        <title>Café - {page}</title>
+        <title>{title}</title>
         <meta name="description" content="Quiosco Cafetería" />
       </Head>
 

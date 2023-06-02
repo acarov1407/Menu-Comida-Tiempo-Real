@@ -1,8 +1,12 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "./_base";
+
+export const config = {
+    api: {
+        externalResolver: true
+    }
+}
 
 export default async function getCategories(req, res) {
-    const prisma = new PrismaClient();
-
     try {
         const categories = await prisma.category.findMany({
             include: {
