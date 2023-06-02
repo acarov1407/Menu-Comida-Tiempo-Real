@@ -2,14 +2,42 @@ import Layout from "@/layout/Layout"
 import Product from "@/components/Product";
 import Spinner from "@/components/Spinner";
 import useKiosk from "@/hooks/useKiosk"
+import prisma from "./api/_base";
+import { useEffect } from "react";
 
-export default function Home() {
-  const { currentCategory, isLoadingCurrentCategory } = useKiosk();
+export async function getStaticProps() {
+  try {
+    const categories = await prisma.category.findMany({
+      include: {
+        products: true
+      }
+    });
+
+    return {
+      props: {
+        initialCategories: categories
+      }
+    }
+  } catch (error) {
+    return {
+      props: {
+        initialCategories: null
+      }
+    }
+  }
+}
+
+export default function Home({ initialCategories }) {
+  const { currentCategory, isLoadingCurrentCategory, setCategories } = useKiosk();
+
+  useEffect(() => {
+    setCategories(initialCategories);
+  }, [])
 
   return (
     isLoadingCurrentCategory
       ?
-        <Spinner />
+      <Spinner />
       :
       (
         <Layout page={`Menú ${currentCategory?.name}`}>

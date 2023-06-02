@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 const KioskContext = createContext();
 
+
 function KioskProvider({ children }) {
 
     const [categories, setCategories] = useState([]);
@@ -27,19 +28,19 @@ function KioskProvider({ children }) {
 
     }, [currentCategory]);
 
-    useEffect(() => {
-        const getCategories = async () => {
-            try{
-                const { data } = await axios("api/categories");
-                setCategories(data);
-            }catch(error){
-                console.log(error)
-            }
-            
-        }
-        
-        getCategories();
-    }, []);
+    // useEffect(() => {
+    //     const getCategories = async () => {
+    //         try {
+    //             const { data } = await axios("api/categories");
+    //             setCategories(data);
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+
+    //     }
+
+    //     getCategories();
+    // }, []);
 
     useEffect(() => {
         setCurrentCategory(categories[0]);
@@ -133,9 +134,11 @@ function KioskProvider({ children }) {
 
 
 
+
     return (
         <KioskContext.Provider
             value={{
+                setCategories,
                 categories,
                 currentCategory,
                 isLoadingCurrentCategory,
