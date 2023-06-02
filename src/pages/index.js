@@ -22,7 +22,7 @@ export async function getStaticProps() {
     return {
       props: {
         initialCategories: [],
-        error
+        error: JSON.parse(JSON.stringify(error))
       }
     }
   }
