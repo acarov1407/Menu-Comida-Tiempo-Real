@@ -28,19 +28,19 @@ function KioskProvider({ children }) {
 
     }, [currentCategory]);
 
-    // useEffect(() => {
-    //     const getCategories = async () => {
-    //         try {
-    //             const { data } = await axios("api/categories");
-    //             setCategories(data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
+     useEffect(() => {
+         const getCategories = async () => {
+             try {
+                 const { data } = await axios("api/categories");
+                 setCategories(data);
+             } catch (error) {
+                 console.log(error)
+             }
 
-    //     }
+         }
 
-    //     getCategories();
-    // }, []);
+         getCategories();
+     }, []);
 
     useEffect(() => {
         setCurrentCategory(categories[0]);
