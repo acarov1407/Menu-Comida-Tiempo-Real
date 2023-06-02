@@ -1,20 +1,32 @@
 import AdminLayout from "@/layout/AdminLayout"
 import SalesStats from "@/components/admin/SalesStats"
-import useSWR from 'swr'
-import axios from 'axios'
+import useKiosk from "@/hooks/useKiosk"
+import { useEffect } from "react"
+import Spinner from "@/components/Spinner"
 
 function Stats() {
-  const fetcher = () => axios('/api/orders_completed').then(data => data.data);
-  const { data: completedOrders } = useSWR('/api/orders_completed', fetcher, {
-    refreshInterval: 3000
-  });
+
+  const { completedOrders, getCompletedOrders, loadings: { isLoadingCompletedOrders } } = useKiosk();
+
+  useEffect(() => {
+    if (completedOrders.length === 0) {
+      getCompletedOrders();
+    }
+  }, [])
   return (
     <AdminLayout page="Admin">
       <h1 className="text-4xl font-black">Panel de Administración</h1>
       <p className="text-2xl my-10">Admnistra las estadísticas de las ordenes vendidas</p>
-      <SalesStats
-        completedOrders={completedOrders}
-      />
+      {
+        isLoadingCompletedOrders
+          ?
+          <Spinner />
+          :
+          <SalesStats
+            completedOrders={completedOrders}
+          />
+      }
+
     </AdminLayout>
   )
 }

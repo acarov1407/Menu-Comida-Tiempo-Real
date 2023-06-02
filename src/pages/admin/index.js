@@ -1,23 +1,32 @@
 import useSWR from 'swr'
 import axios from 'axios'
 import AdminLayout from "@/layout/AdminLayout"
-import Order from "@/components/Order";
+import Order from "@/components/admin/Order";
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
+import useKiosk from "@/hooks/useKiosk";
 
 function Admin() {
 
     const fetcher = () => axios('/api/orders').then(data => data.data);
-    const { data: pendingOrders, error, isLoading } = useSWR('/api/orders', fetcher, {
-        refreshInterval: 100
+    const { data: initialPendingOrders, error, isLoading } = useSWR('/api/orders', fetcher, {
+        refreshInterval: 10000
     });
 
+    const { pendingOrders, setPendingOrders } = useKiosk();
+
     const [isLoadingOrders, setIsLoadingOrders] = useState(true);
+
+    useEffect(() => {
+        setPendingOrders(initialPendingOrders);
+    }, [initialPendingOrders])
 
     useEffect(() => {
         if (pendingOrders) setIsLoadingOrders(false);
         else setIsLoadingOrders(true);
     }, [pendingOrders])
+
+
 
     const existData = pendingOrders && pendingOrders.length > 0;
     return (

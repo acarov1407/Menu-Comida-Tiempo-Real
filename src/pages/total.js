@@ -9,7 +9,7 @@ import { formatMoney } from "@/helpers";
 
 function Total() {
 
-    const { order, clientName, setClientName, total, saveOrderInDB } = useKiosk();
+    const { order, clientName, setClientName, total, saveOrderInDB, loadings: { isCreatingOrder } } = useKiosk();
 
     const [errorMsg, setErrorMsg] = useState('');
     const [isValidOrder, setIsValidOrder] = useState(false);
@@ -74,9 +74,9 @@ function Total() {
                     <input
                         type="submit"
                         value="Confirmar Pedido"
-                        className={`w-full lg:w-auto px-5 py-2 rounded uppercase font-bold text-white text-center 
-                    transition-colors ${isValidOrder ? 'bg-indigo-600 hover:bg-indigo-800 hover:cursor-pointer' : 'bg-indigo-100'}`}
-                        disabled={!isValidOrder}
+                        className={`w-full lg:w-auto px-5 py-2 rounded uppercase font-bold text-white text-center transition-colors bg-indigo-600 hover:bg-indigo-800  
+                        ${!isValidOrder || isCreatingOrder ? 'opacity-40 hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
+                        disabled={!isValidOrder || isCreatingOrder}
                     />
                 </div>
 

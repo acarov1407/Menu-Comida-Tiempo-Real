@@ -1,33 +1,27 @@
-import axios from "axios";
-import useSWR from 'swr';
 import AdminLayout from "@/layout/AdminLayout";
-import Order from "@/components/admin/Order";
+import OrderCompleted from "@/components/admin/OrderCompleted";
 import Spinner from "@/components/Spinner";
-import { useEffect, useState } from "react";
+import useKiosk from "@/hooks/useKiosk";
+import { useEffect } from "react";
 
 function Completed() {
 
-    const fetcher = () => axios('/api/orders_completed').then(data => data.data);
-    const { data: completedOrders} = useSWR('/api/orders_completed', fetcher, {
-        refreshInterval: 3000
-    });
 
-    const [isLoadingOrders, setIsLoadingOrders] = useState(true);
+    const { completedOrders, getCompletedOrders, loadings: { isLoadingCompletedOrders } } = useKiosk();
 
     useEffect(() => {
-        if (completedOrders) setIsLoadingOrders(false);
-        else setIsLoadingOrders(true);
-    }, [completedOrders])
+        getCompletedOrders();
+    }, [])
 
     const existData = completedOrders && completedOrders.length > 0;
 
-  return (
-    <AdminLayout page="Admin">
+    return (
+        <AdminLayout page="Admin">
             <h1 className="text-4xl font-black">Panel de Administración</h1>
             <p className="text-2xl my-10">Administra las ordenes</p>
 
             {
-                isLoadingOrders
+                isLoadingCompletedOrders
                     ?
                     (
                         <Spinner />
@@ -38,7 +32,7 @@ function Completed() {
                             ?
                             (
                                 completedOrders.map(order => (
-                                    <Order
+                                    <OrderCompleted
                                         key={order.id}
                                         _order={order}
                                     />
@@ -52,7 +46,7 @@ function Completed() {
 
             }
         </AdminLayout>
-  )
+    )
 }
 
 export default Completed
