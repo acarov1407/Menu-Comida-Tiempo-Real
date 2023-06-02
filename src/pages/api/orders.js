@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         return insertOrder(handlerInfo);
-    } else if(req.method === 'GET'){
+    } else if (req.method === 'GET') {
         return getOrders(handlerInfo)
     }
 }
@@ -19,26 +19,37 @@ async function insertOrder(handlerInfo) {
     const { req, res, prisma } = handlerInfo;
 
     const { orderedBy, date, total, order } = req.body;
-    const orderCreated = await prisma.order.create({
-        data: {
-            orderedBy,
-            date,
-            total,
-            order
-        }
-    })
-    return res.json(orderCreated);
+
+    try {
+        const orderCreated = await prisma.order.create({
+            data: {
+                orderedBy,
+                date,
+                total,
+                order
+            }
+        })
+        return res.status(200).json(orderCreated);
+    } catch (error) {
+        return res.status(400).json({ msg: 'Ha ocurrido un error al intentar agregar la orden' });
+    }
+
 
 }
 
-async function getOrders(handlerInfo){
-    const {res, prisma } = handlerInfo;
+async function getOrders(handlerInfo) {
+    const { res, prisma } = handlerInfo;
 
-    const orders = await prisma.order.findMany({
-        where: {
-            state : false
-        }
-    });
+    try {
+        const orders = await prisma.order.findMany({
+            where: {
+                state: false
+            }
+        });
 
-    return res.status(200).json(orders);
+        return res.status(200).json(orders);
+    } catch (error) {
+        return res.status(400).json({ msg: 'Ha ocurrido un error al intentar obtener las ordenes' });
+    }
+
 }

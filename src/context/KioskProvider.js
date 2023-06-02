@@ -28,26 +28,32 @@ function KioskProvider({ children }) {
 
     }, [currentCategory]);
 
-     useEffect(() => {
-         const getCategories = async () => {
-             try {
-                 const { data } = await axios("api/categories");
-                 setCategories(data);
-             } catch (error) {
-                 console.log(error)
-             }
+    useEffect(() => {
+        const getCategories = async () => {
+            try {
+                const { data } = await axios("api/categories");
+                setCategories(data);
+            } catch (error) {
+                console.log(error)
+            }
 
-         }
+        }
+        
+        getCategories();
 
-         getCategories();
-     }, []);
+    }, []);
 
     useEffect(() => {
         setCurrentCategory(categories[0]);
     }, [categories])
 
     useEffect(() => {
+        const calculateTotal = () => {
+            const updatedTotal = order.reduce((_total, _product) => (_product.price * _product.amount) + _total, 0);
+            setTotal(updatedTotal);
+        }
         calculateTotal();
+
     }, [order])
 
     const handleClickCategory = (id) => {
@@ -63,7 +69,6 @@ function KioskProvider({ children }) {
     const handleChangeModal = () => {
         setModal(!modal);
     }
-
 
     const handleAddOrder = ({ categoryId, ...product }) => {
         const isInOrder = order.some(_product => _product.id === product.id);
@@ -93,10 +98,6 @@ function KioskProvider({ children }) {
         toast.success('Eliminado Correctamente');
     }
 
-    const calculateTotal = () => {
-        const updatedTotal = order.reduce((_total, _product) => (_product.price * _product.amount) + _total, 0);
-        setTotal(updatedTotal);
-    }
 
     const resetApp = () => {
         setCurrentCategory(categories[0]);
@@ -132,13 +133,9 @@ function KioskProvider({ children }) {
     }
 
 
-
-
-
     return (
         <KioskContext.Provider
             value={{
-                setCategories,
                 categories,
                 currentCategory,
                 isLoadingCurrentCategory,
